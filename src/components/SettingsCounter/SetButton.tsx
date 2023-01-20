@@ -2,15 +2,15 @@ import React from 'react'
 import s from './SetButton.module.css'
 import { Button } from '../Button'
 import { useDispatch, useSelector } from 'react-redux'
-import { RootState } from './../../redux/store'
+import { AppStateType } from './../../redux/store'
 import { resCounterAC } from './../../redux/counter-reducer'
 import { closeSettingsWindowAC } from './../../redux/windowSettings-reducer'
 
 export function SetButton() {
 
     const dispatch = useDispatch()
-    const minValue = useSelector<RootState, number>(s => s.minInput)
-    const error = useSelector<RootState, boolean>(s => s.error)
+    const minValue = useSelector<AppStateType, number>(s => s.minInput)
+    const error = useSelector<AppStateType, boolean>(s => s.error)
 
     function setStartValue() {
         dispatch(resCounterAC(minValue))

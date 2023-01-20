@@ -3,11 +3,11 @@ import './App.css'
 import { SettingsCounter } from './components/SettingsCounter/SettingsCounter'
 import { Counter } from './components/Counter/Counter'
 import { useSelector } from 'react-redux'
-import { RootState } from './redux/store'
+import { AppStateType } from './redux/store'
 
 export function AppWithReduxAdvanced() {
 
-    const opened = useSelector<RootState, boolean>(s => s.windowSettings)
+    const opened = useSelector<AppStateType, boolean>(s => s.windowSettings)
 
     return (
         <div className="App">

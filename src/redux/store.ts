@@ -1,4 +1,4 @@
-import { createStore, combineReducers } from 'redux'
+import { legacy_createStore, combineReducers } from 'redux'
 import { minInputReducer } from './minInput-reducer'
 import { maxInputReducer } from './maxInput-reducer'
 import { counterReducer } from './counter-reducer'
@@ -13,6 +13,25 @@ const rootReducer = combineReducers({
     windowSettings: windowSettingsReducer,
 })
 
-export type RootState = ReturnType<typeof rootReducer>
+let preloadedState
+const minLS = localStorage.getItem('min value')
+const maxLS = localStorage.getItem('max value')
+const counterLS = localStorage.getItem('counter')
 
-export const store = createStore(rootReducer)
+if (minLS && maxLS && counterLS) {
+  preloadedState = {
+    minInput: JSON.parse(minLS),
+    maxInput: JSON.parse(maxLS),
+    counter: JSON.parse(counterLS)
+  }
+}
+
+export const store = legacy_createStore(rootReducer, preloadedState)
+
+export type AppStateType = ReturnType<typeof rootReducer>
+
+store.subscribe(() => {
+    localStorage.setItem('min value', JSON.stringify(store.getState().minInput))
+    localStorage.setItem('max value', JSON.stringify(store.getState().maxInput))
+    localStorage.setItem('counter', JSON.stringify(store.getState().counter))
+})
